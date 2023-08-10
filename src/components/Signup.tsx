@@ -8,6 +8,7 @@ import { register } from '../app/store/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
 import { AppThunkDispatch } from '../app/store/rootReducer';
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
     username: string;
@@ -26,6 +27,7 @@ const schema = yup
 export function SignUpComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
     const authState = useSelector(selectAuthStatus);
+    const navigate = useNavigate();
 
     const { register: formRegister, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
         {
@@ -37,6 +39,15 @@ export function SignUpComponent() {
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         dispatch(register(data))
+            .then((result) => {
+                // Check the result and if success, redirect
+                if (result.payload.success) { // Adjust this condition based on your actual response structure
+                    navigate("/home");
+                }
+            })
+            .catch((error) => {
+                // Handle error as needed
+            });
     };
     console.log(errors)
     return (

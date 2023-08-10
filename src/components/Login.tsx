@@ -25,7 +25,7 @@ const schema = yup
 
 export function LoginComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
-    const authState = useSelector(selectAuthStatus);
+    // const authState = useSelector(selectAuthStatus);
 
     const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
         {

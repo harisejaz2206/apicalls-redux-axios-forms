@@ -19,6 +19,7 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       debugger;
       state.loading = true;
+      console.log("Successful");
       console.log(action);
       // state.token = action.payload.token;
     });

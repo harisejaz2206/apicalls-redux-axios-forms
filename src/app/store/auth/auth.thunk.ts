@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import initialAuthState from "./auth.initialstate";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+// import initialAuthState from "./auth.initialstate";
 import axios from "axios";
 
 // ASYNC THUNKS
@@ -11,7 +11,7 @@ export const login = createAsyncThunk(
       "http://localhost:8081/api/v1/auth/login",
       credentials
     );
-    const token = response.data.token;
+    // const token = response.data.token;
 
     // You may want to store the token somewhere, such as in the Redux state or local storage
     // Here you could dispatch an action to save the token in your state:
@@ -35,7 +35,7 @@ export const register = createAsyncThunk(
       },
     };
     const response = await axios.post(
-      "/api/v1/auth/register",
+      "http://localhost:8081/api/v1/auth/register",
       credentials,
       config
     );
