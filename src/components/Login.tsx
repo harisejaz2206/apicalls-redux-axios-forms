@@ -6,7 +6,7 @@ import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
 import { login } from '../app/store/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
+// import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
 import { AppThunkDispatch } from '../app/store/rootReducer';
 
 
@@ -18,7 +18,7 @@ type FormData = {
 
 const schema = yup
     .object({
-        email: yup.string().required('Valid username is required'),
+        email: yup.string().required('Valid email is required'),
         password: yup.string().required('Valid password is required')
     })
     .required()
