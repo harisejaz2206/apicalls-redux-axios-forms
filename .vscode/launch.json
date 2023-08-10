@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/harisejaz/renesis/apicalls-redux-axios-forms/src/app/store",
+      "program": "/Users/harisejaz/renesis/apicalls-redux-axios-forms/src/app/store/build/Debug/outDebug"
+    }
+  ]
+}
