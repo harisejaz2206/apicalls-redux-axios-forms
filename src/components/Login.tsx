@@ -4,20 +4,27 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
+import { login, register } from '../app/store/auth/auth.thunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
+import { AppThunkDispatch } from '../app/store/rootReducer';
+
 
 type FormData = {
-    username: string;
+    email: string;
     password: string;
 };
 
 const schema = yup
     .object({
-        username: yup.string().required('Valid username is required'),
+        email: yup.string().required('Valid username is required'),
         password: yup.string().required('Valid password is required')
     })
     .required()
 
 export function LoginComponent() {
+    const dispatch = useDispatch<AppThunkDispatch>();
+    const authState = useSelector(selectAuthStatus);
 
     const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
         {
@@ -29,6 +36,7 @@ export function LoginComponent() {
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
 
+        dispatch(login(data))
     };
     console.log(errors)
     return (
@@ -39,9 +47,9 @@ export function LoginComponent() {
                     <div className="mb-4">
                         <div className="flex items-center">
                             <FaUser className="text-gray-400 text-xl mr-2" />
-                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Username" type="text" id="username" {...register('username')} />
+                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Username" type="text" id="email" {...register('email')} />
                         </div>
-                        <div className="mt-1"><ErrorComponent message={errors.username?.message} /></div>
+                        <div className="mt-1"><ErrorComponent message={errors.email?.message} /></div>
                     </div>
                     <div className="mb-4">
                         <div className="flex items-center">

@@ -1,21 +1,20 @@
-interface Auth {
+interface IAuth {
   username: string;
   email: string;
   password: string;
 }
 
-interface AuthState {
-  entities: Auth[];
-  status: "pending" | "succeeded" | "failed";
-  token: string | null;
-  error: string | null;
+interface IAuthState {
+  user?: IAuth | null;
+  loading: boolean;
+  token?: string | null;
+  error?: string | null;
 }
 
-const initialAuthState: AuthState = {
-  entities: [],
-  status: "pending",
+const initialAuthState: IAuthState = {
   token: null,
   error: null,
+  loading: false,
 };
 
 export default initialAuthState;

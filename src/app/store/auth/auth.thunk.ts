@@ -6,8 +6,11 @@ import axios from "axios";
 // Async thunk for logging in
 export const login = createAsyncThunk(
   "auth/login",
-  async (credentials: { username: string; password: string }) => {
-    const response = await axios.post("/api/v1/auth/login", credentials);
+  async (credentials: { email: string; password: string }) => {
+    const response = await axios.post(
+      "http://localhost:8081/api/v1/auth/login",
+      credentials
+    );
     const token = response.data.token;
 
     // You may want to store the token somewhere, such as in the Redux state or local storage
