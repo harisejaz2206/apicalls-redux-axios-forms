@@ -28,16 +28,19 @@ const authSlice = createSlice({
       state.loading = false;
     });
 
-    builder.addCase(register.pending, (state, action) => {
+    builder.addCase(register.pending, (state) => {
       state.loading = true;
+      state.error = null;
     });
 
     builder.addCase(register.fulfilled, (state, action) => {
       state.loading = false;
+      state.user = action.payload;
     });
 
     builder.addCase(register.rejected, (state, action) => {
       state.loading = false;
+      state.error = action.error.message;
     });
   },
   // extraReducers if you are using createAsyncThunk

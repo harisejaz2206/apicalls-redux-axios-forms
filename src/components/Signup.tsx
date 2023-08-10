@@ -4,6 +4,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
+import { register } from '../app/store/auth/auth.thunk';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
+import { AppThunkDispatch } from '../app/store/rootReducer';
 
 type FormData = {
     username: string;
@@ -20,8 +24,10 @@ const schema = yup
     .required()
 
 export function SignUpComponent() {
+    const dispatch = useDispatch<AppThunkDispatch>();
+    const authState = useSelector(selectAuthStatus);
 
-    const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
+    const { register: formRegister, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
         {
             resolver: yupResolver(schema),
         }
@@ -30,7 +36,7 @@ export function SignUpComponent() {
 
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-
+        dispatch(register(data))
     };
     console.log(errors)
     return (
@@ -41,21 +47,21 @@ export function SignUpComponent() {
                     <div className="mb-4">
                         <div className="flex items-center">
                             <FaUser className="text-gray-400 text-xl mr-2" />
-                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Username" type="text" id="username" {...register('username')} />
+                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Username" type="text" id="username" {...formRegister('username')} />
                         </div>
                         <div className="mt-1"><ErrorComponent message={errors.username?.message} /></div>
                     </div>
                     <div className="mb-4">
                         <div className="flex items-center">
                             <FaEnvelope className="text-gray-400 text-xl mr-2" /> {/* Change to FaEnvelope */}
-                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Email Address" type="text" id="email" {...register('email')} /> {/* Change id and register */}
+                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Email Address" type="text" id="email" {...formRegister('email')} /> {/* Change id and register */}
                         </div>
                         <div className="mt-1"><ErrorComponent message={errors.email?.message} /></div>
                     </div>
                     <div className="mb-4">
                         <div className="flex items-center">
                             <FaLock className="text-gray-400 text-xl mr-2" /> {/* Change to FaLock */}
-                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Password" type="password" id="password" {...register('password')} /> {/* Change type and id */}
+                            <input className="mt-1 p-2 w-full border rounded-md" placeholder="Password" type="password" id="password" {...formRegister('password')} /> {/* Change type and id */}
                         </div>
                         <div className="mt-1"><ErrorComponent message={errors.password?.message} /></div>
                     </div>

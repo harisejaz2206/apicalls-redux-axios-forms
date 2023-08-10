@@ -4,10 +4,11 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
-import { login, register } from '../app/store/auth/auth.thunk';
+import { login } from '../app/store/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
 import { AppThunkDispatch } from '../app/store/rootReducer';
+
 
 
 type FormData = {
@@ -35,7 +36,6 @@ export function LoginComponent() {
 
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-
         dispatch(login(data))
     };
     console.log(errors)
