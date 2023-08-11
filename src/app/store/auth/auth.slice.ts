@@ -9,6 +9,7 @@ const authSlice = createSlice({
     logout(state, action) {
       state.token = "";
       state.user = null;
+      state.isLoggedIn = false;
     },
   },
   extraReducers: (builder) => {
@@ -18,13 +19,15 @@ const authSlice = createSlice({
 
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = true;
+      state.isLoggedIn = true;
       console.log("Successful builder.addCase");
-      console.log(action);
+      console.log("The action from login.fulfilled reducer is:", { action });
       // state.token = action.payload.token;
     });
 
     builder.addCase(login.rejected, (state, action) => {
       state.loading = false;
+      state.isLoggedIn = false;
     });
 
     builder.addCase(register.pending, (state) => {

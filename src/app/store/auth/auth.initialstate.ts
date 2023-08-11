@@ -9,12 +9,14 @@ interface IAuthState {
   loading: boolean;
   token?: string | null;
   error?: string | null;
+  isLoggedIn: boolean;
 }
 
 const initialAuthState: IAuthState = {
   token: null,
   error: null,
   loading: false,
+  isLoggedIn: false,
 };
 
 export default initialAuthState;

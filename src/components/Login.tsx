@@ -1,14 +1,13 @@
-import React from 'react';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
 import { login } from '../app/store/auth/auth.thunk';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
 import { AppThunkDispatch } from '../app/store/rootReducer';
-
+import { useNavigate } from "react-router-dom";
 
 
 type FormData = {
@@ -25,9 +24,10 @@ const schema = yup
 
 export function LoginComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
+    const navigate = useNavigate();
     // const authState = useSelector(selectAuthStatus);
 
-    const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>(
         {
             resolver: yupResolver(schema),
         }
@@ -36,7 +36,18 @@ export function LoginComponent() {
 
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        dispatch(login(data))
+        dispatch(login(data)).unwrap()
+            .then((result) => {
+                console.log("inside the result")
+                // Check the result and if success, redirect
+                if (result.payload.success) {
+                    console.log(result.payload) // Adjust this condition based on your actual response structure
+                    navigate("/home", { replace: true });
+                }
+            })
+            .catch((error) => {
+                console.log("The error from the submit handler is:", { error })
+            });
     };
     console.log(errors)
     return (

@@ -6,6 +6,7 @@ import { SignUpComponent } from './components/Signup';
 import { PostComponent } from './components/Post';
 import NavBar from './components/NavBar';
 import HomePage from './components/HomePage';
+import ProtectedRoute from './app/store/routes/ProtectedRoute';
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/login" element={<LoginComponent />} />
         <Route path="/signup" element={<SignUpComponent />} />
         <Route path="/post" element={<PostComponent />} />
-        <Route path='/home' element={<HomePage />} />
+        {/* <Route path='/home' element={<HomePage />} /> */}
+        <Route path='/home' element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
       </Routes>
     </div>
   );

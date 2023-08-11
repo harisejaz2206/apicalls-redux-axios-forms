@@ -8,3 +8,5 @@ export const selectAuthEntities = (state: RootState) => state.auth.user;
 
 // to get the auth token
 export const selectAuthToken = (state: RootState) => state.auth.token;
+
+export const selectLoggedIn = (state: RootState) => state.auth.isLoggedIn;
