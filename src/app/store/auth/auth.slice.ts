@@ -18,12 +18,11 @@ const authSlice = createSlice({
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
-      state.loading = true;
+      state.loading = false;
       state.isLoggedIn = true;
       state.token = action.payload.token;
-      console.log("Successful builder.addCase");
-      console.log("The action from login.fulfilled reducer is:", { action });
-      // state.token = action.payload.token;
+      state.user = action.payload.payload.user;
+      console.log("The action payload is:", action.payload);
     });
 
     builder.addCase(login.rejected, (state, action) => {
@@ -39,6 +38,7 @@ const authSlice = createSlice({
     builder.addCase(register.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
+      // localStorage.setItem()
     });
 
     builder.addCase(register.rejected, (state, action) => {
@@ -51,4 +51,5 @@ const authSlice = createSlice({
 
 // Exports
 export const { actions } = authSlice;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

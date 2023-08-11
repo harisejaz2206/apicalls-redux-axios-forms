@@ -4,10 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
 import { login } from '../app/store/auth/auth.thunk';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
 import { AppThunkDispatch } from '../app/store/rootReducer';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { RootState } from '../app/store/rootReducer';
 
 
 type FormData = {
@@ -25,15 +26,14 @@ const schema = yup
 export function LoginComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
     const navigate = useNavigate();
-    // const authState = useSelector(selectAuthStatus);
+
+
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>(
         {
             resolver: yupResolver(schema),
         }
     );
-
-
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         dispatch(login(data)).unwrap()

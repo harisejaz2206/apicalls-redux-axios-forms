@@ -6,9 +6,10 @@ import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
 import { register } from '../app/store/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
+import { selectAuthStatus, selectAuthUser, selectAuthToken } from '../app/store/auth/auth.selector';
 import { AppThunkDispatch } from '../app/store/rootReducer';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { RootState } from '../app/store/rootReducer';
 
 type FormData = {
     username: string;
@@ -28,6 +29,12 @@ export function SignUpComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
     const authState = useSelector(selectAuthStatus);
     const navigate = useNavigate();
+
+    // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+
+    // if (isLoggedIn) {
+    //     return <Navigate to="/home" />;
+    // }
 
     const { register: formRegister, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
         {
