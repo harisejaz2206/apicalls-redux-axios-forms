@@ -38,9 +38,9 @@ export function LoginComponent() {
     const onSubmit: SubmitHandler<FormData> = (data) => {
         dispatch(login(data)).unwrap()
             .then((result) => {
-                console.log("inside the result")
+                console.log("inside the result", result)
                 // Check the result and if success, redirect
-                if (result.payload.success) {
+                if (result.payload.token) {
                     console.log(result.payload) // Adjust this condition based on your actual response structure
                     navigate("/home", { replace: true });
                 }

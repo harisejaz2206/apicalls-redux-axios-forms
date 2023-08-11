@@ -20,6 +20,7 @@ const authSlice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = true;
       state.isLoggedIn = true;
+      state.token = action.payload.token;
       console.log("Successful builder.addCase");
       console.log("The action from login.fulfilled reducer is:", { action });
       // state.token = action.payload.token;
