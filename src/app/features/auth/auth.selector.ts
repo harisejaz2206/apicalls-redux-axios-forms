@@ -1,4 +1,4 @@
-import { RootState } from "../rootReducer";
+import { RootState } from "../../../rootReducer";
 
 // to get the auth status
 export const selectAuthStatus = (state: RootState) => state.auth.loading;

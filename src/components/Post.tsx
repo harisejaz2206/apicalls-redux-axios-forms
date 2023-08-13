@@ -4,8 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup";
 import ErrorComponent from './ErrorComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../app/store/rootReducer';
-import { useNavigate, Navigate } from "react-router-dom";
+import { RootState } from '../rootReducer';
+import { Navigate } from "react-router-dom";
 
 type FormData = {
     title: string;
@@ -27,10 +27,6 @@ export function PostComponent() {
 
     const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-    if (!isLoggedIn) {
-        return <Navigate to="/login" />;
-    }
-
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(schema),
     });
@@ -38,6 +34,10 @@ export function PostComponent() {
     const onSubmit: SubmitHandler<FormData> = (data) => {
         // Handle form submission here
     };
+
+    if (!isLoggedIn) {
+        return <Navigate to="/login" />;
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-800 to-black">

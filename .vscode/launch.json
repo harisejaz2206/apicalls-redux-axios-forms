@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/harisejaz/renesis/apicalls-redux-axios-forms/src/app/store",
-      "program": "/Users/harisejaz/renesis/apicalls-redux-axios-forms/src/app/store/build/Debug/outDebug"
+      "cwd": "/Users/harisejaz/renesis/apicalls-redux-axios-forms/src/app/features",
+      "program": "/Users/harisejaz/renesis/apicalls-redux-axios-forms/src/app/features/build/Debug/outDebug"
     }
   ]
 }

@@ -3,12 +3,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
-import { login } from '../app/store/auth/auth.thunk';
+import { login } from '../app/features/auth/auth.thunk';
 import { useDispatch, useSelector } from 'react-redux';
 // import { selectAuthStatus, selectAuthEntities, selectAuthToken } from '../app/store/auth/auth.selector';
-import { AppThunkDispatch } from '../app/store/rootReducer';
+import { AppThunkDispatch } from '../rootReducer';
 import { Navigate, useNavigate } from "react-router-dom";
-import { RootState } from '../app/store/rootReducer';
+import { RootState } from '../rootReducer';
 
 
 type FormData = {
@@ -38,9 +38,10 @@ export function LoginComponent() {
     const onSubmit: SubmitHandler<FormData> = (data) => {
         dispatch(login(data)).unwrap()
             .then((result) => {
-                console.log("inside the result", result)
-                // Check the result and if success, redirect
-                if (result.payload.token) {
+                console.log("LOGIN.TSX - inside the result after submitting form. The result is:", result)
+                // Commented the line below after integrating the user.service.ts file
+                // if (result.payload.success) { // Adjust this condition based on your actual response structure
+                if (result.payload) {
                     console.log(result.payload) // Adjust this condition based on your actual response structure
                     navigate("/home", { replace: true });
                 }

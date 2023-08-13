@@ -4,12 +4,15 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
-import { register } from '../app/store/auth/auth.thunk';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthStatus, selectAuthUser, selectAuthToken } from '../app/store/auth/auth.selector';
-import { AppThunkDispatch } from '../app/store/rootReducer';
-import { useNavigate, Navigate } from "react-router-dom";
-import { RootState } from '../app/store/rootReducer';
+import { register } from '../app/features/auth/auth.thunk';
+import { useDispatch } from 'react-redux';
+// import { selectAuthStatus } from '../app/features/auth/auth.selector';
+import { AppThunkDispatch } from '../rootReducer';
+import { useNavigate } from "react-router-dom";
+// import { RootState } from '../rootReducer';
+// import { IUser } from '../app/features/auth/interfaces/user.interface';
+// import { IToken } from '../app/features/auth/interfaces/token.interface';
+// import { IResponseInterface } from '../app/interfaces/api-response.interface';
 
 type FormData = {
     username: string;
@@ -27,7 +30,7 @@ const schema = yup
 
 export function SignUpComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
-    const authState = useSelector(selectAuthStatus);
+    // const authState = useSelector(selectAuthStatus);
     const navigate = useNavigate();
 
     // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
@@ -36,7 +39,7 @@ export function SignUpComponent() {
     //     return <Navigate to="/home" />;
     // }
 
-    const { register: formRegister, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormData>(
+    const { register: formRegister, handleSubmit, formState: { errors } } = useForm<FormData>(
         {
             resolver: yupResolver(schema),
         }
@@ -47,8 +50,9 @@ export function SignUpComponent() {
     const onSubmit: SubmitHandler<FormData> = (data) => {
         dispatch(register(data))
             .then((result) => {
-                // Check the result and if success, redirect
-                if (result.payload.success) { // Adjust this condition based on your actual response structure
+                // Commented the line below after integrating the user.service.ts file
+                // if (result.payload.success) { // Adjust this condition based on your actual response structure
+                if (result.payload) {
                     navigate("/home");
                 }
             })
@@ -56,6 +60,10 @@ export function SignUpComponent() {
                 // Handle error as needed
             });
     };
+
+
+
+
     console.log(errors)
     return (
         <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-800 to-black">

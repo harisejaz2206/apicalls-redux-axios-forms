@@ -3,8 +3,8 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../app/store/auth/auth.slice';
-import { selectAuthUser, selectAuthStatus } from '../app/store/auth/auth.selector';
+import { logout } from '../app/features/auth/auth.slice';
+import { selectAuthUser, selectAuthStatus } from '../app/features/auth/auth.selector';
 
 const navigation = [
     {
@@ -44,10 +44,10 @@ export default function NavBar() {
     const navigate = useNavigate();
     const user = useSelector(selectAuthUser);
     const status = useSelector(selectAuthStatus);
-    console.log("the user is: ", user);
+    console.log("NavBar.tsx - the user is: ", user);
 
     const handleLogout = () => {
-        console.log("inside the handle logout")
+        console.log("NavBar.tsx - inside the handle logout")
         dispatch(logout());
     };
 
