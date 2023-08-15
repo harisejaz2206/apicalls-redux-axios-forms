@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppThunkDispatch } from '../rootReducer';
 import { Navigate, useNavigate } from "react-router-dom";
 import { RootState } from '../rootReducer';
+import { useState } from 'react';
+import { HttpService } from '../app/services/base.service';
 
 
 type FormData = {
@@ -28,7 +30,6 @@ export function LoginComponent() {
     const navigate = useNavigate();
 
 
-
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>(
         {
             resolver: yupResolver(schema),
@@ -45,6 +46,7 @@ export function LoginComponent() {
                     console.log(result.payload) // Adjust this condition based on your actual response structure
                     navigate("/home", { replace: true });
                 }
+                HttpService.setToken(result.payload!.token)
             })
             .catch((error) => {
                 console.log("The error from the submit handler is:", { error })

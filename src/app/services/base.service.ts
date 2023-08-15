@@ -23,6 +23,7 @@ export class HttpService {
    * @param token
    */
   static setToken(token: string): void {
+    console.log(token);
     axios.defaults!.headers!["Authorization"] = `Bearer ${token}`;
   }
 

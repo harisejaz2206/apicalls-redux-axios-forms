@@ -31,7 +31,7 @@ export const register = createAsyncThunk(
     const config = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer {token}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     // const response = await userService.signUpUser(credentials, config);

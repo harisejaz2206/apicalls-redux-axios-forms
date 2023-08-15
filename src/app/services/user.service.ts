@@ -1,5 +1,5 @@
 // Importing interfaces
-import { IToken } from "../../app/features/auth/interfaces/token.interface";
+// import { IToken } from "../../app/features/auth/interfaces/token.interface";
 import { ISignUpInterface } from "../../app/features/auth/interfaces/sign-up.interface";
 import { ILogInInterface } from "../../app/features/auth/interfaces/login.interface";
 import { IForgotPasswordInterface } from "../../app/features/auth/interfaces/forgot-password.interface";
@@ -16,12 +16,12 @@ class UserService extends HttpService {
 
   signUpUser = (
     data: ISignUpInterface
-  ): Promise<IResponseInterface<{ token: IToken; user: IUser }>> =>
+  ): Promise<IResponseInterface<{ token: string; user: IUser }>> =>
     this.post(`${this.prefix}/signup`, data);
 
   loginUser = (
     data: ILogInInterface
-  ): Promise<IResponseInterface<{ token: IToken; user: IUser }>> =>
+  ): Promise<IResponseInterface<{ token: string; user: IUser }>> =>
     this.post(`${this.prefix}/login`, data);
 
   //   forgotPassword = (

@@ -21,7 +21,7 @@ const navigation = [
     },
     {
         name: 'Post',
-        href: '/post',
+        href: '/createpost',
         current: false,
         className: 'bg-gradient-to-r from-blue-400 to-pink-500 hover:from-green-500 hover:to-red-500 text-white',
     },
