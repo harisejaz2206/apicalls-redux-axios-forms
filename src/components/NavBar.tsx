@@ -49,19 +49,19 @@ export default function NavBar() {
     // console.log("NavBar.tsx - the user is: ", user);
 
     const handleLogout = () => {
-        const userEmail = user?.email || 'Unknown Email'; // Get the email from the user object
+        // const userEmail = user?.email || 'Unknown Email'; // Get the email from the user object
 
-        console.log("NavBar.tsx - inside the handle logout");
+        // console.log("NavBar.tsx - inside the handle logout");
 
-        // If there is any need to perform an async action, it should be defined in the logout thunk
+        // // If there is any need to perform an async action, it should be defined in the logout thunk
         dispatch(logout());
 
-        // Show SweetAlert on successful logout
-        Swal.fire({
-            icon: 'success',
-            title: 'Logout Successful',
-            text: `You have been logged out, ${userEmail}.`,
-        });
+        // // Show SweetAlert on successful logout
+        // Swal.fire({
+        //     icon: 'success',
+        //     title: 'Logout Successful',
+        //     text: `You have been logged out, ${userEmail}.`,
+        // });
     };
 
     return (

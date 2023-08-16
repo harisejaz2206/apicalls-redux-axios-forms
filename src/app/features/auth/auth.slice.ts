@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import initialAuthState from "./auth.initialstate";
 import { login, register } from "./auth.thunk";
+import { logoutUser } from "../../services/logoutuser";
 
 const authSlice = createSlice({
   name: "auth",
@@ -10,6 +11,7 @@ const authSlice = createSlice({
       state.token = "";
       state.user = null;
       state.isLoggedIn = false;
+      // logoutUser();
     },
   },
   extraReducers: (builder) => {

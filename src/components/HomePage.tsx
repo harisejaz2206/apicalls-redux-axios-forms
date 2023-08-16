@@ -112,16 +112,16 @@ const HomePage: React.FC = () => {
 
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-6">
             <h1 className="text-4xl font-bold mb-4">All Posts</h1>
             <div className="flex flex-wrap justify-center">
                 {posts && posts.map((post) => (
-                    <div className="card m-4 p-4 bg-white shadow-lg rounded-lg" key={post._id}>
+                    <div className="card m-4 p-8 bg-white shadow-lg rounded-lg w-64" key={post._id}>
                         <div className="card-header text-xl font-semibold flex justify-between">
                             <h2 className="text-2xl">{post.title}</h2>
-                            <div className="space-x-4">
-                                <button className="text-blue-500 hover:text-blue-700" onClick={() => handleOpenModal(post)}><AiOutlineEdit /></button>
-                                <button className="text-red-500 hover:text-red-700" onClick={() => handleDeletePost(post._id!)}><AiOutlineDelete /></button>
+                            <div className="flex flex-col space-y-4 items-center">
+                                <button className="text-blue-500 hover:text-blue-700 text-2xl" onClick={() => handleOpenModal(post)}><AiOutlineEdit /></button>
+                                <button className="text-red-500 hover:text-red-700 text-2xl" onClick={() => handleDeletePost(post._id!)}><AiOutlineDelete /></button>
                             </div>
                         </div>
                         <div className="card-body text-lg text-gray-700 mt-2">

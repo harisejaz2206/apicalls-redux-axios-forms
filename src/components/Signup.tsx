@@ -6,13 +6,8 @@ import * as yup from "yup"
 import ErrorComponent from './ErrorComponent';
 import { register } from '../app/features/auth/auth.thunk';
 import { useDispatch } from 'react-redux';
-// import { selectAuthStatus } from '../app/features/auth/auth.selector';
 import { AppThunkDispatch } from '../rootReducer';
 import { useNavigate } from "react-router-dom";
-// import { RootState } from '../rootReducer';
-// import { IUser } from '../app/features/auth/interfaces/user.interface';
-// import { IToken } from '../app/features/auth/interfaces/token.interface';
-// import { IResponseInterface } from '../app/interfaces/api-response.interface';
 
 type FormData = {
     username: string;
@@ -32,12 +27,6 @@ export function SignUpComponent() {
     const dispatch = useDispatch<AppThunkDispatch>();
     // const authState = useSelector(selectAuthStatus);
     const navigate = useNavigate();
-
-    // const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-
-    // if (isLoggedIn) {
-    //     return <Navigate to="/home" />;
-    // }
 
     const { register: formRegister, handleSubmit, formState: { errors } } = useForm<FormData>(
         {

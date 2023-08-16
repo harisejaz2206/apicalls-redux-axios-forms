@@ -35,6 +35,7 @@ export class HttpService {
   protected get = async (url: string, params?: any): Promise<any> => {
     const res = await axios.get(`${Config}/${url}`, {
       params,
+      withCredentials: true,
       cancelToken: this.source.token,
     });
     return res.data;
@@ -53,6 +54,7 @@ export class HttpService {
   ): Promise<any> => {
     const res = await axios.post(`${Config}/${url}`, body, {
       ...options,
+      withCredentials: true,
       cancelToken: this.source.token,
     });
     return res.data;
