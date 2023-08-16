@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../app/features/auth/auth.slice';
 import { selectAuthUser, selectAuthStatus } from '../app/features/auth/auth.selector';
+import Swal from 'sweetalert2';
+import { RootState } from "../rootReducer";
 
 const navigation = [
     {
@@ -44,11 +46,22 @@ export default function NavBar() {
     const navigate = useNavigate();
     const user = useSelector(selectAuthUser);
     const status = useSelector(selectAuthStatus);
-    console.log("NavBar.tsx - the user is: ", user);
+    // console.log("NavBar.tsx - the user is: ", user);
 
     const handleLogout = () => {
-        console.log("NavBar.tsx - inside the handle logout")
+        const userEmail = user?.email || 'Unknown Email'; // Get the email from the user object
+
+        console.log("NavBar.tsx - inside the handle logout");
+
+        // If there is any need to perform an async action, it should be defined in the logout thunk
         dispatch(logout());
+
+        // Show SweetAlert on successful logout
+        Swal.fire({
+            icon: 'success',
+            title: 'Logout Successful',
+            text: `You have been logged out, ${userEmail}.`,
+        });
     };
 
     return (

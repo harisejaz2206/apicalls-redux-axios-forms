@@ -22,7 +22,7 @@ const authSlice = createSlice({
       state.isLoggedIn = true;
       state.token = action.payload.payload?.token;
       state.user = action.payload.payload?.user;
-      console.log("AUTH.SLICE.TS - The action payload is:", action.payload);
+      // console.log("AUTH.SLICE.TS - The action payload is:", action.payload);
     });
 
     builder.addCase(login.rejected, (state, action) => {

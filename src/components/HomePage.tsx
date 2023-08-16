@@ -7,6 +7,8 @@ import { IPost } from '../app/features/post/interfaces/post.interface';
 import { updatePostById } from '../app/features/post/post.thunk';
 import { deletePost } from '../app/features/post/post.thunk';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai'; // Import React icons
+import Swal from 'sweetalert2';
+
 
 const HomePage: React.FC = () => {
 
@@ -28,18 +30,47 @@ const HomePage: React.FC = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [editingPost, setEditingPost] = useState<IPost | null>(null);
 
+    const handleDeletePost = async (postId: string) => {
+        // const dispatch: AppThunkDispatch = useDispatch();
 
-    // const handleUpdatePost = (post: IPost) => {
-    //     // You can open a modal or navigate to a different page to edit the post
-    //     // Then call your updatePost thunk with the updated post data
-    //     dispatch(updatePostById({ id: post._id!, data: post }));
-    // };
+        // Show a confirmation dialog before deleting the post
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this post!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+        });
 
+        // If the user confirms the deletion
+        if (result.isConfirmed) {
+            try {
+                await dispatch(deletePost(postId)).unwrap(); // Using unwrap to handle the Promise
 
-    const handleDeletePost = (postId: string) => {
-        // You can show a confirmation dialog before deleting the post
-        // Then call your deletePost thunk with the post ID
-        dispatch(deletePost(postId));
+                // Show SweetAlert on successful deletion
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Post Deleted',
+                    text: 'Your post has been successfully deleted.',
+                });
+            } catch (error: any) {
+                // Show SweetAlert on error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Deletion Failed',
+                    text: 'Something went wrong while deleting your post.',
+                    footer: `Error: ${error.message || 'Unknown error'}`, // Display the error message if available
+                });
+            }
+        } else {
+            // If the user cancels the deletion
+            Swal.fire({
+                icon: 'info',
+                title: 'Deletion Cancelled',
+                text: 'Your post has not been deleted.',
+            });
+        }
     };
 
     const handleOpenModal = (post: IPost) => {
@@ -51,11 +82,32 @@ const HomePage: React.FC = () => {
         setModalOpen(false);
     };
 
-    const handleUpdatePost = (post: IPost) => {
+    const handleUpdatePost = async (post: IPost) => {
         setModalOpen(false);
-        const { _id, ...res } = post
-        dispatch(updatePostById({ id: _id!, data: res }));
+        const { _id, ...res } = post;
+
+        try {
+            await dispatch(updatePostById({ id: _id!, data: res })).unwrap(); // Using unwrap to handle the Promise
+            // Show SweetAlert on successful update
+            Swal.fire({
+                icon: 'success',
+                title: 'Post Updated',
+                text: 'Your post has been successfully updated.',
+            });
+        } catch (error: any) {
+            // Show SweetAlert on error
+            Swal.fire({
+                icon: 'error',
+                title: 'Update Failed',
+                text: 'Something went wrong while updating your post.',
+                footer: `Error: ${error.message || 'Unknown error'}`, // Display the error message if available
+            });
+        }
     };
+
+
+
+
 
 
 
@@ -66,16 +118,27 @@ const HomePage: React.FC = () => {
                 {posts && posts.map((post) => (
                     <div className="card m-4 p-4 bg-white shadow-lg rounded-lg" key={post._id}>
                         <div className="card-header text-xl font-semibold flex justify-between">
-                            <h2>{post.title}</h2>
-                            <div>
-                                <button onClick={() => handleOpenModal(post)}><AiOutlineEdit /></button>
-                                <button onClick={() => handleDeletePost(post._id!)}><AiOutlineDelete /></button>
+                            <h2 className="text-2xl">{post.title}</h2>
+                            <div className="space-x-4">
+                                <button className="text-blue-500 hover:text-blue-700" onClick={() => handleOpenModal(post)}><AiOutlineEdit /></button>
+                                <button className="text-red-500 hover:text-red-700" onClick={() => handleDeletePost(post._id!)}><AiOutlineDelete /></button>
                             </div>
                         </div>
-                        <div className="card-body text-lg text-gray-700">
+                        <div className="card-body text-lg text-gray-700 mt-2">
                             <p>{post.body}</p>
                         </div>
                     </div>
+                ))}
+            </div>
+            <div className="pagination flex justify-center space-x-2 mt-4">
+                {Array.from({ length: paginationInfo?.totalPages }, (_, index) => (
+                    <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`py-2 px-4 rounded-full border ${currentPage === index + 1 ? 'bg-blue-500 text-white' : 'border-gray-300'}`}
+                    >
+                        {index + 1}
+                    </button>
                 ))}
             </div>
             {modalOpen && editingPost && (
@@ -93,17 +156,6 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
             )}
-            <div className="pagination">
-                {Array.from({ length: paginationInfo?.totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => handlePageChange(index + 1)}
-                        className={currentPage === index + 1 ? 'active' : ''}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
         </div>
     );
 };

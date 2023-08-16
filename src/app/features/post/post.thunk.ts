@@ -10,8 +10,8 @@ export const fetchAllPosts = createAsyncThunk(
   async (params: { page: number; limit: number }) => {
     const response = await postService.getAllPosts(params.page, params.limit);
 
-    console.log("Response:", response);
-    console.log("Response Payload:", response.payload);
+    // console.log("Response:", response);
+    // console.log("Response Payload:", response.payload);
 
     if (response && response.payload) {
       return response.payload;

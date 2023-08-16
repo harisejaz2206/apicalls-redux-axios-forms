@@ -12,10 +12,10 @@ export const login = createAsyncThunk(
   async (credentials: ILogInInterface, thunkAPI) => {
     try {
       const response = await userService.loginUser(credentials);
-      console.log("AUTH.THUNK.TS - The response data is:", response);
+      // console.log("AUTH.THUNK.TS - The response data is:", response);
       return response;
     } catch (error: any) {
-      console.error("Error during login:", error);
+      // console.error("Error during login:", error);
       return thunkAPI.rejectWithValue(
         error.response?.data || "Error during login"
       );

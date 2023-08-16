@@ -11,6 +11,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { RootState } from '../rootReducer';
 import { useState } from 'react';
 import { HttpService } from '../app/services/base.service';
+import Swal from 'sweetalert2';
 
 
 type FormData = {
@@ -39,17 +40,28 @@ export function LoginComponent() {
     const onSubmit: SubmitHandler<FormData> = (data) => {
         dispatch(login(data)).unwrap()
             .then((result) => {
-                console.log("LOGIN.TSX - inside the result after submitting form. The result is:", result)
-                // Commented the line below after integrating the user.service.ts file
-                // if (result.payload.success) { // Adjust this condition based on your actual response structure
+                console.log("LOGIN.TSX - inside the result after submitting form. The result is:", result);
                 if (result.payload) {
-                    console.log(result.payload) // Adjust this condition based on your actual response structure
+                    console.log(result.payload); // Adjust this condition based on your actual response structure
+                    // Show SweetAlert on successful login
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        text: 'You are now logged in.',
+                    });
+                    HttpService.setToken(result.payload!.token);
                     navigate("/home", { replace: true });
                 }
-                HttpService.setToken(result.payload!.token)
             })
             .catch((error) => {
-                console.log("The error from the submit handler is:", { error })
+                console.log("The error from the submit handler is:", { error });
+                // Show SweetAlert on login error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: 'Something went wrong while logging in.',
+                    footer: `Error: ${error.message || 'Unknown error'}`, // Display the error message if available
+                });
             });
     };
     console.log(errors)
