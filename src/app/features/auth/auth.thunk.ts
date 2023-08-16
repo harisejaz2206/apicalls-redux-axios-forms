@@ -11,7 +11,7 @@ export const login = createAsyncThunk(
   "auth/login",
   async (credentials: ILogInInterface, thunkAPI) => {
     try {
-      const response = await userService.loginUser(credentials);
+      const response = await userService.loginUser2(credentials);
       // console.log("AUTH.THUNK.TS - The response data is:", response);
       return response;
     } catch (error: any) {

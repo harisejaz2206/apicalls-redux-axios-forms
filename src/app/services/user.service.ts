@@ -24,6 +24,11 @@ class UserService extends HttpService {
   ): Promise<IResponseInterface<{ token: string; user: IUser }>> =>
     this.post(`${this.prefix}/login`, data);
 
+  loginUser2 = (
+    data: ILogInInterface
+  ): Promise<IResponseInterface<{ token: string; user: IUser }>> =>
+    this.post(`${this.prefix}/login`, data);
+
   //   forgotPassword = (
   //     data: IForgotPasswordInterface
   //   ): Promise<IResponseInterface<{}>> =>
